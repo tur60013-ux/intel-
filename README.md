@@ -25,7 +25,7 @@ FROM
   SELECT 
   region,
   device_type,
-  COUNT(*) as device_in_categorey,
+  COUNT(*) as device_in_category,
   SUM(energy_savings_yr) as  total_energy_saving_kwh,
   SUM(co2_saved_kg_yr) as total_co2_saving_kg
   FROM based_data
@@ -36,9 +36,9 @@ FROM
 SELECT 
 region,
 device_type,
-device_in_categorey as total_device,
-ROUND(total_energy_saving_kwh / device_in_categorey, 2) as avg_energy_saving_kwh,
-ROUND((total_co2_saving_kg/device_in_categorey )/ 1000, 2) as avg_co2_saved_ton,
+device_in_category as total_device,
+ROUND(total_energy_saving_kwh / device_in_category, 2) as avg_energy_saving_kwh,
+ROUND((total_co2_saving_kg/device_in_category )/ 1000, 2) as avg_co2_saved_ton,
 ROUND((total_energy_saving_kwh/ SUM(total_energy_saving_kwh) OVER(partition by region ) )* 100, 2) as pct_of_region_energy_contributed,
 ROUND((total_co2_saving_kg/ SUM(total_co2_saving_kg) OVER(partition by region))* 100, 2)as pct_of_region_co2_contributed
 FROM regional
